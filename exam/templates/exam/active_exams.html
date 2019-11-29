@@ -1,0 +1,38 @@
+{% extends "exam/base.html" %}
+{% block content %}
+<table class="table">
+
+    <thead>
+    <tr>
+        <th>Exam-Logo</th>
+        <th scope="col">Exam-Name</th>
+        <th>Exam-Category</th>
+        <th>Passage-Mode</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key in exams %}
+    <tr>
+        <td><img class="align-self-center mr-3" style="width:75px; height:75px;" alt=""
+                 src="{{key.logo.url}}"></td>
+        <td>{{key.name}}</td>
+        <td> {{key.category}}</td>
+        <td>{{key.mode}}</td>
+
+
+        <td><a type="button" class="btn btn-info" href="{% url 'exam:create_question' key.id %}">add question</a>
+            <!--<a href="/question_list/" type="=button" class="btn btn-info ">consult exam</a>-->
+            <a href="{% url 'exam:preparation' exam_id=key.id %}" type="=button" class="btn btn-info ">try exam</a>
+            <a href="{% url 'exam:question_list' exam_id=key.id %}" type="=button" class="btn btn-info ">consult
+                exam</a>
+            <!--<a href="{% url 'exam:preparationSTUD' exam_id=key.id %}" type="=button" class="btn btn-info ">pass exam</a>-->
+
+
+        </td>
+        {% endfor %}
+    </tr>
+
+    </tbody>
+</table>
+{% endblock %}
+

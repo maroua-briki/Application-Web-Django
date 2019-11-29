@@ -1,0 +1,33 @@
+{% extends "exam/base_user.html" %}
+{% block content %}
+<div class="container">
+    <h2>Card Header and Footer</h2>
+    <div class="card">
+        <div class="card-header">
+            <h5>your assigned exam is {{GRP.assigned_exams}}</h5>
+        </div>
+        <div class="card-body">
+            <center><h6>you have to enter the mode that you want to deal with the exam</h6>
+
+            </center>
+
+            <form>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio">pass_exam
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio">training
+                </label>
+
+            </form>
+
+
+        </div>
+        <div class="card-footer">
+            fffffff
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

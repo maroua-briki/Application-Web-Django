@@ -1,0 +1,35 @@
+{% extends "exam/base_user.html" %}
+
+{% block content %}
+
+<table class="table">
+
+    <thead>
+    <tr>
+        <th>Exam-Logo</th>
+        <th scope="col">Exam-Name</th>
+        <th>Exam-Category</th>
+        <th>Passage-Mode</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key in stud %}
+
+    <tr>
+<td><img class="align-self-center mr-3" style="width:60px; height:60px;" alt=""
+                                         src="{{key.assigned_exam.logo.url}}">
+                            </td>
+
+        <td>{{key.assigned_exam.name}}</td>
+        <td> {{key.assigned_exam.category}}</td>
+        <td>{{key.assigned_exam.mode}}</td>
+        <td>
+            <a href="{% url 'exam:preparationSTUD' exam_id=key.id %}" type="=button" class="btn btn-info ">pass exam</a>
+        </td>
+        {% endfor %}
+    </tr>
+
+    </tbody>
+</table>
+
+{% endblock %}

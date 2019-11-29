@@ -1,0 +1,120 @@
+{% extends "exam/base_user.html" %}
+{% block content %}
+
+
+<!-- Display the countdown timer in an element -->
+
+
+
+
+
+
+<div class="container">
+    <form method="post" action="?page={{ question.next_page_number}}">
+        {% csrf_token %} {% for q in question %}
+        {%if q.multi_choice_answer_set.all %}
+        <div class="col col-md-3"><label class=" form-control-label">{{q.description}}</label></div>
+        <div class="col col-md-9">
+            <div class="form-check">
+                {%for choix in q.multi_choice_answer_set.all %}
+                <div class="radio">
+                    <label for="{{choix.id}}" class="form-check-label ">
+                        <input type="checkbox" name="radiosM" value="{{choix.id}}" class="form-check-input">{{choix.multi_variant}}
+                    </label>
+                </div>
+
+                {%endfor%}
+
+            </div>
+        </div>
+
+        {%endif%}
+        {%if q.one_answer_set.all %}
+        <div class="col col-md-3"><label class=" form-control-label">{{q.description}}</label></div>
+        <div class="col col-md-9">
+            <div class="form-check">
+                {%for choix in q.one_answer_set.all %}
+                <div class="radio">
+                    <!--<label for="{{choix.id}}" class="form-check-label ">-->
+                    <input type="radio" id="{{choix.id}}" name="radios" value="{{choix.id}}" class="form-check-input">{{choix.answer_variant}}
+                    <!--</label>-->
+                </div>
+
+                {%endfor%}
+                <!--<a href="#{{question.id}}" class="btn btn-block ">{{forloop.counter}}</a>-->
+
+            </div>
+        </div>
+
+        {%endif%}
+        {%if q.free_text_set.all %}
+
+
+        {%for choix in q.free_text_set.all %}
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="textarea-input"
+                                             class=" form-control-label">{{q.description}}</label></div>
+            <div class="col-12 col-md-9"><textarea name="text" id="textarea-input" rows="9" placeholder="Content..."
+                                                   class="form-control"></textarea></div>
+        </div>
+
+        <br>{%endfor%}
+
+
+        {%endif%}
+
+
+        <div>
+
+            <input type="submit" value="submit" class="btn btn-danger" name="submit">
+        </div>
+        <button id="myBtn" type="button" class="btn btn-success">Correct answer</button>
+
+        <div>
+            <center><a href="{% url 'exam:score' exam.id %}" class="btn btn-block btn-primary">finish </a></center>
+        </div>
+
+
+        {% endfor %}
+
+
+        <center>
+
+            {% if question.has_other_pages %}
+            <ul class="pagination">
+                {% if question.has_previous %}
+                <li><a href="?page={{ question.previous_page_number }}">&laquo;</a>
+                    <i class="material-icons"></i></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in question.paginator.page_range %}
+                {% if question.number == i %}
+                <li class="active"><span type="button" class="btn btn-secondary bmd-btn-fab">{{ i }} <span
+                        class="sr-only">(current)</span></span>
+                </li>
+                {% else %}
+                <li><a href="?page={{ i }}" type="button" class="btn btn-secondary bmd-btn-fab">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if question.has_next %}
+                <li><a href="?page={{ question.next_page_number }}" type="button"
+                       class="btn btn-success bmd-btn-fab">&raquo;</a></li>
+                {% else %}
+                <!--<a href="{% url 'exam:score' exam.id %}" type="submit" value="submit"></a>-->
+                <li class="disabled"><span>&raquo;</span></li>
+
+                {% endif %}
+            </ul>
+        </center>
+
+        {% endif %}
+        </span>
+    </form>
+</div>
+
+
+</div>
+
+{% endblock %}
+

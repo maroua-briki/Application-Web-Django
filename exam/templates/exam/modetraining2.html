@@ -1,0 +1,144 @@
+{% extends "exam/base_user.html" %}
+{% block content %}
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1 1; /* Sit on top */
+    padding-top: 70px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 50%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
+ <div class="col-lg-8">
+
+<form method="post" action="{% url 'exam:save-reponseSTUD'  exam_id=q.ex.id indice=indice %}">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{exam.name}}</h5>
+                </div>
+
+                <div class="card-body">
+        {% csrf_token %}
+
+        {%if q.multi_choice_answer_set.all %}
+        {% include "exam/multichoiceQUESTION.html" with question=q %}
+        {%endif%}
+
+        {%if q.one_answer_set.all %}
+        {% include "exam/one_answerQUESTION.html" with question=q %}
+        {%endif%}
+        {%if q.free_text_set.all %}
+        {% include "exam/free_textQUESTION.html" with question=q %}
+        {%endif%}
+                </div>
+            </div>
+
+            <input type="submit" value="submit" style="margin-bottom: 20px; margin-right:40px" class="btn btn-right btn-warning" name="submit">
+
+</form>
+
+
+    <!-- display correct answer using modal box-->
+    <button id="myBtn" style="margin-bottom: 20px;" class="btn btn-link">correct answer</button>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times</span>
+            <p>the correct answer: </p>
+            <p>{{q.correct_answer}}</p>
+        </div>
+    </div>
+ </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <strong>Questions</strong>
+            </div>
+            <div class="card-body">
+                {% for i in question_ids %}
+                {% if i in liste1 %}
+                <a href="{% url 'exam:save-reponseSTUD'  exam_id=q.ex.id indice=forloop.counter0 %}"
+                   class="btn  btn-success" style="margin:3px">{{forloop.counter}} </a>
+                {% else %}
+                <a href="{% url 'exam:save-reponseSTUD'  exam_id=q.ex.id indice=forloop.counter0 %}"
+                   class="btn  btn-danger" style="margin:3px">{{forloop.counter}} </a>
+                {% endif %}
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <center><a href="{% url 'exam:scoreUSER' exam_id=exam_id %}" class="btn btn-block btn-info">finish </a>
+        </center>
+    </div>
+
+
+</div>
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+
+</script>
+{% endblock %}

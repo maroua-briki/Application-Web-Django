@@ -1,0 +1,22 @@
+{% extends 'exam/base_user.html' %}
+{% block content %}
+<div class="col-lg-8">
+
+            <div class="card">
+
+        <div class="card-header">
+            <center> <h4><strong>{{exam.name}}-correction</strong></h4></center>
+        </div>
+        <div class="card-body">
+{% for q in questions %}
+<h5>{{forloop.counter}}/ {{q.description}}</h5>
+<p><strong>right answer: </strong>{{q.correct_answer}}</p>
+
+{% endfor %}
+        </div>
+            </div>
+</div>
+
+
+
+{% endblock %}

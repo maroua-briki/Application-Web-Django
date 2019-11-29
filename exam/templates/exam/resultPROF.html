@@ -1,0 +1,21 @@
+{% extends 'exam/base.html' %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-header">
+        <strong class="card-title mb-3">{{exam.name}}</strong>
+    </div>
+    <div class="card-body">
+        <div class="mx-auto d-block">
+            <h5 class="text-sm-center mt-2 mb-1">{{username}}</h5>
+            <div class="location text-sm-center"> your score = {{SCORE}}</div>
+        </div>
+        <hr>
+
+    </div>
+</div>
+
+
+{% endblock %}

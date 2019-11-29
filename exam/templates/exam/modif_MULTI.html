@@ -1,0 +1,93 @@
+{% extends 'exam/base.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        <div class="col-xs-12 col-sm-12">
+            {%csrf_token%}
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-lg-6 ">
+                        <strong>Edit multichoice_question</strong></div>
+                </div>
+                <div class="card-body card-block">
+                    <div class="form-group">
+                        <label class=" form-control-label">description</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"></div>
+                            <input class="form-control" value="{{question.description}}" name="desc">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class=" form-control-label">point</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-usd"></i></div>
+                            <input class="form-control" type="number" value="{{question.point}}" name="point">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" form-control-label">Header text</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                            <input class="form-control" value="{{question.header_text}}" name="qht">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class=" form-control-label">footer text</label>
+                        <div class="input-group">
+                            <input class="form-control" value="{{question.footer_text}}" name="qft">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" form-control-label">success msg</label>
+                        <div class="input-group">
+                            <input class="form-control" value="{{question.success_message}}" name="success_msg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" form-control-label">fail msg</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-usd"></i></div>
+                            <input class="form-control" value="{{question.fail_message}}" name="fail_msg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="one_answer">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th><strong>answer variant</strong></th>
+                    <th><strong>answer description</strong></th>
+                    <th><strong>answer point</strong></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {%for choix in question.multichoice_set.all %}
+                <tr>
+                    <td><input value="{{choix.answer_variant}}" name="answer_variant{{forloop.counter}}">
+                    <td><input value="{{choix.answer_description}}" name="answer_desc{{forloop.counter}}"></td>
+                    <td><input value="{{choix.point}}" name="point{{forloop.counter}}"></td>
+                    <td><input type="hidden" value="{{choix.id}}" name="id{{forloop.counter}}"></td>
+
+                </tr>
+                {%endfor%}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-info">save</button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

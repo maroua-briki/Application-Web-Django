@@ -1,0 +1,154 @@
+{% extends "exam/base.html" %}
+
+{% block content %}
+
+<form method="POST" xmlns="http://www.w3.org/1999/html">
+    {%csrf_token%}
+    <div class="form-group">
+        <label for="qdes">Description</label>
+        <input type="text" class="form-control" name="qdes">
+    </div>
+    <div class="form-group">
+        <label for="qpoint">points</label>
+        <input type="number" name="qpoint" min="0"/>
+    </div>
+    <div class="form-group">
+        <label for="qht">header_text</label>
+        <textarea class="form-control" name="qht" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="qft">footer_text</label>
+        <textarea class="form-control" name="qft" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="success_msg">success_message</label>
+        <textarea class="form-control" name="success_msg" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="fail_msg">fail_message</label>
+        <textarea class="form-control" name="fail_msg" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="correct_answer">correct_answer</label>
+        <textarea class="form-control" name="correct_answer" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="type">Type</label>
+        <select class="form-control" name="type" id="tp">
+            <option value="one_answer">one answer</option>
+            <option value="free_text">free text</option>
+            <option value="multi"> multichoice</option>
+
+        </select>
+    </div>
+    <div class="container" id="one_answer">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th><strong>answer variant</strong></th>
+                <th><strong>answer description</strong></th>
+                <th><strong>answer point</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="text" class="form-control" name="answ_variant1"></td>
+                <td><input type="text" class="form-control" name="answ_desc1"></td>
+                <td><input type="text" class="form-control" name="point1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" name="answ_variant2"></td>
+                <td><input type="text" class="form-control" name="answ_desc2"></td>
+                <td><input type="text" class="form-control" name="point2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" name="answ_variant3"></td>
+                <td><input type="text" class="form-control" name="answ_desc3"></td>
+                <td><input type="text" class="form-control" name="point3"></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <div class="container" id="free_text">
+        <div class="form-group">
+
+            <label for="text">text</label>
+            <textarea class="form-control" name="text" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="container" id="multi">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th><strong>answer variant</strong></th>
+                <th><strong>answer description</strong></th>
+                <th><strong>answer point</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+
+                <td><input type="text" class="form-control" name="answer_variant1"></td>
+                <td><input type="text" class="form-control" name="multidescp1"></td>
+                <td><input type="text" class="form-control" name="pointn1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" name="answer_variant2"></td>
+                <td><input type="text" class="form-control" name="multidescp2"></td>
+                <td><input type="text" class="form-control" name="pointn2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" name="answer_variant3"></td>
+                <td><input type="text" class="form-control" name="multidescp3"></td>
+                <td><input type="text" class="form-control" name="pointn3"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-info">create</button>
+            <button type="submit" class="btn btn-info">cancel</button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+ $('#one_answer').hide();
+  $('#free_text').hide();
+   $('#multi').hide();
+
+$("#tp").change(function(){
+
+    if($('#tp').val() == 'one_answer')
+         { $('#one_answer').show(); $('#free_text').hide();   $('#multi').hide();}
+    if ( $("#tp").val() == "free_text" )
+         {$('#free_text').show(); $('#one_answer').hide();$('#multi').hide();}
+    if ( $("#tp").val() == "multi" )
+         {$('#multi').show(); $('#free_text').hide();$('#one_answer').hide();}
+
+});
+});
+
+
+
+
+    </script>
+
+    {% endblock %}
+
+
+
+
+
+

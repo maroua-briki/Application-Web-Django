@@ -1,0 +1,101 @@
+{% extends "exam/base_user.html" %}
+{% block content %}
+
+<!--Display the countdown timer in an element-->
+<p id="demo" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">TIMER</p>
+<div id="time">
+    <script>
+// Set the date we're counting down to
+var countDownDate = new Date("Sep 27, 2018 21:50:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+// Get todays date and time
+var now = new Date().getTime();
+
+// Find the distance between now and the count down date
+var distance = countDownDate - now;
+
+// Time calculations for days, hours, minutes and seconds
+<!--var days = Math.floor(distance / (1000 * 60 * 60 * 24));-->
+var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+// Display the result in the element with id="demo"
+document.getElementById("demo").innerHTML = hours + "h "
++ minutes + "m " + seconds + "s ";
+
+// If the count down is finished, write some text
+if (distance < 0) {
+clearInterval(x);
+document.getElementById("demo").innerHTML = "time_over";
+window.location.href = 'index'
+
+}
+}, 1000);
+
+
+
+
+
+    </script>
+</div>
+<form method="post" action="{% url 'exam:save-reponseSTUD'  exam_id=q.ex.id indice=indice %}">
+
+    <div class="col-lg-8">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{exam.name}}</h5>
+                </div>
+
+                <div class="card-body">
+
+                        {% csrf_token %}
+
+                        {%if q.multi_choice_answer_set.all %}
+                        {% include "exam/multichoiceQUESTION.html" with question=q %}
+                        {%endif%}
+                        {%if q.one_answer_set.all %}
+                        {% include "exam/one_answerQUESTION.html" with question=q %}
+                        {%endif%}
+                        {%if q.free_text_set.all %}
+                        {% include "exam/free_textQUESTION.html" with question=q %}
+                        {%endif%}
+
+                    </div>
+                </div>
+            </div>
+                                    <div><input type="submit" value="submit" class="btn btn-warning" name="submit" style="margin-bottom: 20px;"></div>
+
+        </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+
+            <div class="card-header">
+                <strong>Questions</strong>
+            </div>
+            <div class="card-body">
+                {% for i in question_ids %}
+                {% if i in liste2 %}
+                <a href="{% url 'exam:save-reponseSTUD'  exam_id=q.ex.id indice=forloop.counter0 %}"
+                   class="btn  btn-success" style="margin:3px">{{forloop.counter}} </a>
+                {% else %}
+
+                <a href="{% url 'exam:save-reponseSTUD' exam_id=q.ex.id indice=forloop.counter0 %}"
+                   class="btn  btn-danger" style="margin:3px">{{forloop.counter}} </a>
+                {% endif %}
+                {%endfor%}
+
+            </div>
+        </div>
+</div>
+<div>
+    <center><a href="{% url 'exam:certif' exam_id=exam_id %}" class="btn btn-block btn-info">finish </a></center>
+</div>
+</form>
+
+{% endblock %}

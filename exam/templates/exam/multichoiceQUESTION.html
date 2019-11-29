@@ -1,0 +1,17 @@
+<div class="col col-md-3"><label class=" form-control-label">{{q.description}}</label></div>
+<div class="col col-md-9">
+    <div class="form-check">
+        {%for choix in question.multi_choice_answer_set.all %}
+        <div class="radio">
+            <label for="{{choix.id}}" class="form-check-label ">
+                <input type="checkbox" name="radiosM" value="{{choix.id}}" class="form-check-input">{{choix.multi_variant}}
+            </label>
+        </div>
+
+        {%endfor%}
+
+    </div>
+</div>
+
+
+

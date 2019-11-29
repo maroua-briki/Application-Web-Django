@@ -1,0 +1,58 @@
+{% extends 'exam/base.html' %}
+    {% block content %}
+        <div class="container">
+
+
+         {% for q in exam.question_set.all %}
+            {%if q.one_answer_set.all %}
+         <div class="card"  >
+
+             <div class="card-header">
+                 <div class="col-lg-6 ">
+
+                     <strong class="card-title">{{q.description}}</strong></div>
+                   <div class="col-lg-3 ">
+                       <a href="/exam/{{q.id}}/edit_ONE" class="btn btn-success btn-block">edit</a>
+                                           </div>
+                    <div class="col-lg-3">
+                        <a href="/exam/{{q.id}}/delete_question" class="btn btn-warning btn-block">delete</a>
+                                     </div>
+
+             </div>
+
+             </div>
+
+             {% endif %}
+              {% if q.free_text_set.all %}
+               <div class="card"  >
+                  <div class="card-header">
+                 <div class="col-lg-6 ">
+                     <strong class="card-title">{{q.description}}</strong></div>
+                   <div class="col-lg-3 ">
+                       <a href="/exam/{{q.id}}/edit_FREE" class="btn btn-success btn-block">edit</a>
+                                           </div>
+                    <div class="col-lg-3">
+                                         <a href="/exam/{{q.id}}/delete_question" class="btn btn-warning btn-block">delete</a>
+                                     </div>
+                  </div>
+               </div>
+               {% endif %}
+              {% if q.multichoice_set.all %}
+             <div class="card"  >
+                      <div class="card-header">
+                 <div class="col-lg-6 ">
+                     <strong class="card-title">{{q.description}}</strong></div>
+                   <div class="col-lg-3 ">
+                       <a href="/exam/{{q.id}}/edit_MULTI" class="btn btn-success btn-block">edit</a>
+                                           </div>
+                    <div class="col-lg-3">
+                                         <a href="/exam/{{q.id}}/delete_question" class="btn btn-warning btn-block">delete</a>
+                                     </div>
+                      </div>
+             </div>
+               {% endif %}
+
+         {% endfor %}
+        </div>
+            {% endblock %}
+

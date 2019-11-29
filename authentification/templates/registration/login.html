@@ -1,0 +1,18 @@
+{% extends 'exam/base_user.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<center>
+  <card>
+<h2>Login</h2>
+
+<form method="post">
+
+    {% csrf_token %}
+  {{ form.as_p }}
+<button type="submit" class="btn btn-dark">Login</button>
+</form> </card>
+</center>
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{%for choix in question.free_text_set.all %}
+<div class="row form-group">
+    <div class="col col-md-3"><label for="textarea-input"
+                                     class=" form-control-label">{{q.description}}</label></div>
+    <div class="col-12 col-md-9"><textarea name="text" id="textarea-input" rows="9" placeholder="Content..."
+                                           class="form-control" required></textarea></div>
+</div>
+
+{%endfor%}
+
+

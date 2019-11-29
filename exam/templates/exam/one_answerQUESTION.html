@@ -1,0 +1,15 @@
+<div class="col col-md-3"><label class=" form-control-label">{{q.description}}</label></div>
+<div class="col col-md-9">
+    <div class="form-check">
+        {%for choix in question.one_answer_set.all %}
+        <div class="radio">
+            <input type="radio" id="{{choix.id}}" name="radios" value="{{choix.id}}" class="form-check-input">{{choix.answer_variant}}
+        </div>
+
+        {%endfor%}
+
+    </div>
+</div>
+
+
+

@@ -1,0 +1,38 @@
+{% extends "exam/base.html" %}
+{% block content %}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Email</th>
+        <th scope="col">assign to</th>
+    </thead>
+    <tbody>
+    {% for stu in grp %}
+    <tr>
+        <td>{{stu.student.first_name}}</td>
+        <td>{{stu.student.last_name}}</td>
+        <td>{{stu.student.email}}</td>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            <td><input type="hidden" value="{{ stu.student.email }}" name="emailst"></td>
+            <td>
+                <select name="drop" id="exams">
+                    <option>select an exam</option>
+                    {% for ex in exams %}
+                    <option value="{{ex.id}}">{{ex.name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="OK" class="btn btn-success btn-sm" name="submit">
+            </td>
+        </form>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
